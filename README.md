@@ -11,6 +11,43 @@ list views, detail pages, and relational navigation.
 > exercises every load-bearing piece end-to-end so the mentor can sanity-check
 > the approach before the program starts.
 
+## Screenshots
+
+### Agones sidebar — Game Servers list
+Live view of all `GameServer` resources with state badges (`Allocated`, `Ready`, `Scheduled`), namespace, address, node, and parent fleet.
+
+![Game Servers](docs/screenshots/game-servers.png)
+
+### Fleets — capacity, replicas, allocation
+Each `Fleet` shows desired vs ready vs allocated counts with capacity badges, so operators can see fleet health at a glance.
+
+![Fleets](docs/screenshots/fleets.png)
+
+### Game Server Sets — desired / ready / allocated
+The intermediate `GameServerSet` layer is also surfaced for debugging rolling updates and scaling.
+
+![Game Server Sets](docs/screenshots/game-server-sets.png)
+
+### Custom Resources — all Agones CRDs auto-detected
+The plugin works on top of Headlamp's CRD discovery — every Agones CRD (`Fleet`, `GameServer`, `GameServerSet`, `FleetAutoscaler`, `GameServerAllocationPolicy`) is recognised and listed.
+
+![Custom Resources](docs/screenshots/custom-resources.png)
+
+### Cluster overview — context for the demo environment
+Headlamp's standard cluster overview, showing the `kind-agones-demo` cluster with Agones installed.
+
+![Cluster Overview](docs/screenshots/cluster-overview.png)
+
+### Namespaces — Agones system namespace
+The Agones controller and allocator run in the `agones-system` namespace, visible alongside user workloads in `default`.
+
+![Namespaces](docs/screenshots/namespaces.png)
+
+### Nodes — single-node kind cluster
+The local `kind` cluster used for the demo.
+
+![Nodes](docs/screenshots/nodes.png)
+
 ## What it does today
 
 - Adds a top-level **Agones** section to the Headlamp sidebar with three
