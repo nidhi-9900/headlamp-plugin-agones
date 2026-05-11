@@ -3,6 +3,7 @@
   "version": "0.0.1-poc",
   "description": "Headlamp plugin that surfaces Agones GameServer, Fleet, and GameServerSet CRDs with list/detail views and relational navigation.",
   "private": true,
+  "license": "Apache-2.0",
   "scripts": {
     "start": "headlamp-plugin start",
     "build": "headlamp-plugin build",
@@ -29,7 +30,7 @@
     ]
   },
   "devDependencies": {
-    "@kinvolk/headlamp-plugin": "^0.13.1"
+    "@kinvolk/headlamp-plugin": "^0.14.0"
   },
   "overrides": {
     "typescript": "5.6.2"

@@ -1,7 +1,7 @@
 # headlamp-plugin-agones (PoC)
 
 A proof-of-concept Headlamp plugin that surfaces [Agones](https://agones.dev/)
-CRDs — `GameServer`, `Fleet`, `GameServerSet` — inside the Headlamp UI with
+CRDs - `GameServer`, `Fleet`, `GameServerSet` - inside the Headlamp UI with
 list views, detail pages, and relational navigation.
 
 > Built as a working artefact for the LFX Mentorship project
@@ -13,37 +13,37 @@ list views, detail pages, and relational navigation.
 
 ## Screenshots
 
-### Agones sidebar — Game Servers list
+### Agones sidebar - Game Servers list
 Live view of all `GameServer` resources with state badges (`Allocated`, `Ready`, `Scheduled`), namespace, address, node, and parent fleet.
 
 ![Game Servers](docs/screenshots/game-servers.png)
 
-### Fleets — capacity, replicas, allocation
+### Fleets - capacity, replicas, allocation
 Each `Fleet` shows desired vs ready vs allocated counts with capacity badges, so operators can see fleet health at a glance.
 
 ![Fleets](docs/screenshots/fleets.png)
 
-### Game Server Sets — desired / ready / allocated
+### Game Server Sets - desired / ready / allocated
 The intermediate `GameServerSet` layer is also surfaced for debugging rolling updates and scaling.
 
 ![Game Server Sets](docs/screenshots/game-server-sets.png)
 
-### Custom Resources — all Agones CRDs auto-detected
-The plugin works on top of Headlamp's CRD discovery — every Agones CRD (`Fleet`, `GameServer`, `GameServerSet`, `FleetAutoscaler`, `GameServerAllocationPolicy`) is recognised and listed.
+### Custom Resources - all Agones CRDs auto-detected
+The plugin works on top of Headlamp's CRD discovery - every Agones CRD (`Fleet`, `GameServer`, `GameServerSet`, `FleetAutoscaler`, `GameServerAllocationPolicy`) is recognised and listed.
 
 ![Custom Resources](docs/screenshots/custom-resources.png)
 
-### Cluster overview — context for the demo environment
+### Cluster overview - context for the demo environment
 Headlamp's standard cluster overview, showing the `kind-agones-demo` cluster with Agones installed.
 
 ![Cluster Overview](docs/screenshots/cluster-overview.png)
 
-### Namespaces — Agones system namespace
+### Namespaces - Agones system namespace
 The Agones controller and allocator run in the `agones-system` namespace, visible alongside user workloads in `default`.
 
 ![Namespaces](docs/screenshots/namespaces.png)
 
-### Nodes — single-node kind cluster
+### Nodes - single-node kind cluster
 The local `kind` cluster used for the demo.
 
 ![Nodes](docs/screenshots/nodes.png)
@@ -52,7 +52,7 @@ The local `kind` cluster used for the demo.
 
 - Adds a top-level **Agones** section to the Headlamp sidebar with three
   children: Game Servers, Fleets, Game Server Sets.
-- Lists every Agones CRD via the in-cluster Kubernetes API — no extra
+- Lists every Agones CRD via the in-cluster Kubernetes API - no extra
   controller, no out-of-band fetch.
 - Renders summary columns mentioned in the LFX expected outcome:
   - Game Server: name, namespace, **state** (humanized chip), address+port,
@@ -70,7 +70,7 @@ The local `kind` cluster used for the demo.
 - Humanized lifecycle chip: 11 raw `GameServerState` strings collapse into
   three tones (success / warning / error) with a tooltip explaining the raw
   state. Source of truth is
-  [`agones/pkg/apis/agones/v1/gameserver.go`](../repos/agones/pkg/apis/agones/v1/gameserver.go).
+  [`agones/pkg/apis/agones/v1/gameserver.go`](https://github.com/agones-dev/agones/blob/main/pkg/apis/agones/v1/gameserver.go).
 - Registers kind icons for the Headlamp cluster Map view so Agones resources
   are recognisable when they appear in resource graphs alongside Deployments,
   Services, etc.
@@ -109,7 +109,7 @@ src/
 npm install
 
 # 2. Boot a kind cluster + Agones with two demo fleets and one allocation
-#    (idempotent — re-runnable; pass FRESH=1 to recreate from scratch).
+#    (idempotent - re-runnable; pass FRESH=1 to recreate from scratch).
 ./docs/bootstrap-demo.sh
 
 # 3. Build + watch the plugin. `npm start` auto-copies main.js and
@@ -140,10 +140,9 @@ with Game Servers, Fleets, and Game Server Sets underneath.
 ## How the relational nav is wired
 
 Agones controllers stamp two labels on every `GameServer` they create
-(see
-[`gameserverset.go:169`](../repos/agones/pkg/apis/agones/v1/gameserverset.go#L169)
+(see [`gameserverset.go`](https://github.com/agones-dev/agones/blob/main/pkg/apis/agones/v1/gameserverset.go)
 and
-[`fleet.go:139`](../repos/agones/pkg/apis/agones/v1/fleet.go#L139)):
+and [`fleet.go`](https://github.com/agones-dev/agones/blob/main/pkg/apis/agones/v1/fleet.go)):
 
 | Label                       | Set by         | Used here for                                |
 | --------------------------- | -------------- | -------------------------------------------- |
@@ -151,7 +150,7 @@ and
 | `agones.dev/gameserverset`  | GameServerSet  | "Show me every GS in this set"               |
 
 The plugin fetches owned children with `useList({ labelSelector: ... })` on
-the existing `KubeObject` class — no controller-side helper needed.
+the existing `KubeObject` class - no controller-side helper needed.
 
 ## Why this design
 
@@ -162,7 +161,7 @@ A few non-obvious calls worth flagging for a mentor reviewer:
   `.status.allocatedReplicas`, etc., and let getters like `connectionString`
   live next to the data they format. This matches how the upstream Headlamp
   codebase models Gateway API resources
-  ([`frontend/src/lib/k8s/gateway.ts`](../repos/headlamp/frontend/src/lib/k8s/gateway.ts)).
+  ([`frontend/src/lib/k8s/gateway.ts`](https://github.com/kubernetes-sigs/headlamp/blob/main/frontend/src/lib/k8s/gateway.ts)).
 - **One state chip, three tones.** The 11 raw `GameServerState` strings are
   noisy when they appear next to each other in a list. Operators care about
   "is this server serving / coming up / broken." `STATE_MAP` in
@@ -175,7 +174,7 @@ A few non-obvious calls worth flagging for a mentor reviewer:
 
 ## References
 
-- LFX listing — _Add Agones to Headlamp - Game Server Management UI_, 2026 T2
+- LFX listing - _Add Agones to Headlamp - Game Server Management UI_, 2026 T2
 - Upstream tracking issue: [`headlamp-k8s/headlamp#5261`](https://github.com/kubernetes-sigs/headlamp/issues/5261)
 - Headlamp plugin docs: <https://headlamp.dev/docs/latest/development/plugins/>
 - Agones CRD types: `agones/pkg/apis/agones/v1/`
