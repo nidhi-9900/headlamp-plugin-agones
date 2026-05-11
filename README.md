@@ -141,7 +141,6 @@ with Game Servers, Fleets, and Game Server Sets underneath.
 
 Agones controllers stamp two labels on every `GameServer` they create
 (see [`gameserverset.go`](https://github.com/agones-dev/agones/blob/main/pkg/apis/agones/v1/gameserverset.go)
-and
 and [`fleet.go`](https://github.com/agones-dev/agones/blob/main/pkg/apis/agones/v1/fleet.go)):
 
 | Label                       | Set by         | Used here for                                |
